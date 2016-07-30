@@ -1,12 +1,11 @@
 /**
- * Created by deng on 16-7-23.
- * http://v.6.cn/coop/mobile/index.php?type=chat&ruid=43294079&uid=1116589796&padapi=coop-mobile-chatConf.php&av=1.5&encpass=&logiuid=
- * ws address
- * command=login
- *
- * http://v.6.cn/coop/mobile/index.php?type=chat&ruid=57954885&uid=1116922394&padapi=coop-mobile-chatConf.php&av=1.5&encpass=&logiuid=
+ * Created by dg on 2016/7/29.
  */
-var firdecode = function (c) {
+module.exports = Code;
+function Code() {
+    
+}
+Code.firdecode = function (c) {
     c = c.replace(/\(|\)|\@/g, function (d) {
         switch (d) {
             case "(":
@@ -17,13 +16,12 @@ var firdecode = function (c) {
                 return "="
         }
     });
-    c = base64.decode(c);
-    c = inflate(c, 6);
+    c = Code.base64.decode(c);
+    c = Code.inflate(c, 6);
     // console.log(c);
     return c
 };
-var a={};
-var base64 = (function () {
+Code.base64 = (function () {
     var c = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
     var f = function () {
         this.str = "";
@@ -72,7 +70,7 @@ var base64 = (function () {
         decode: d
     }
 })();
-var inflate = (function () {
+Code.inflate = (function () {
     var p = 32768;
     var x = 0;
     var J = 1;
@@ -460,6 +458,7 @@ var inflate = (function () {
         l = zip_fixed_bd;
         return i(ab, aa, Y)
     };
+    var a = {};
     var B = function (ag, Y, ai) {
         var ac;
         var ab;
@@ -1353,106 +1352,3 @@ var inflate = (function () {
     };
     return F
 })();
-// command=login
-// uid=1119251130
-// encpass=
-//     roomid=60324596
-var uid = 1119251130;
-var roomid = 60324596;
-function mplode(a) {
-    a.push("");
-    return a.join("\r\n")
-}
-var Code=require("./model/Code");
-var login = ["command=login", "uid=" + uid, "encpass=", "roomid=" + roomid];
-// a.push("");
-var heartBeat = ["command=sendmessage", "content=y8vPLwAA"];
-var heartBeatData = mplode(heartBeat);
-
-// console.log(a.join("\r\n"));
-var WebSocketClient = require('websocket').client;
-
-var client = new WebSocketClient();
-
-client.on('connectFailed', function (error) {
-    console.log('Connect Error: ' + error.toString());
-});
-
-client.on('connect', function (connection) {
-
-    console.log('WebSocket Client Connected');
-    connection.on('error', function (error) {
-        console.log("Connection Error: " + error.toString());
-    });
-    connection.on('close', function () {
-        // client.connect("ws://42.62.28.177:5999/");
-        console.log('echo-protocol Connection Closed');
-    });
-    connection.on('message', function (message) {
-        if (message.type === 'utf8') {
-            console.log(message.utf8Data);
-            var split = message.utf8Data.split("\r\n");
-            if (split[3] == "content=login.success") {
-                var sec = ["command=sendmessage", "content=q1YqUbJSKijKLIvPzEvLV9JRSs7PK0nNA4pWK6XmJRckFhcDFSjV1gIA"];
-                setTimeout(sendData(mplode(sec)), 500);
-            }
-            if (split[0]>50){
-                if (split[1] == 'enc=yes') {
-                    var decodedata = firdecode(split[3].slice("content=".length));
-                    // var iconv = require('iconv');
-                    // var conv = new iconv.Iconv('WINDOWS-1251', 'utf8');
-                    // // var str = iconv.decode(iconv.encode(data, 'GBK'), 'GBK'); //return unicode string from GBK encoded bytes
-                    // // unescape(data.replace(/\\/g, "%"));
-                    // // var buffer = new Buffer(data, 'binary');
-                    // var toString = conv.convert(data).toString();
-                    console.log("yes---"+decodedata);
-                }else
-                if (split[1] == 'enc=no'){
-                    var j = split[3].slice("content=".length);
-                    // console.log(j);
-                    var decodenodata = base64.decode(j);
-                    console.log("no---"+decodenodata);
-
-                }
-
-            }else {
-                if(split[3]=='content=login.success'){
-                    heartBeat();
-                }
-            }
-
-
-            // var parse = JSON.parse(message.utf8Data);
-            // switch (parse.type) {
-            //     case "gift":
-            //         break;
-            //     case "chat":
-            //         break;
-            //
-            // }
-        }
-    });
-    function sendData(data) {
-        try {
-            if (connection.connected) {
-
-                connection.sendUTF(data.toString());
-            }
-        } catch (e) {
-            console.log(e.message);
-        }
-
-    }
-
-    setTimeout(sendData(mplode(login)), 0);
-
-    function heartBeat() {
-        setInterval(function () {
-            // var time={"uri":"6","ts":new Date().getTime(),"svc_link":cookie};
-            setTimeout(sendData(heartBeatData), 500);
-        }, 16000);
-    }
-
-});
-
-client.connect("ws://42.62.28.176:5999/");
