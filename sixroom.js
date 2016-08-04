@@ -1357,8 +1357,8 @@ var inflate = (function () {
 // uid=1119251130
 // encpass=
 //     roomid=60324596
-var uid = 1111111111;
-var roomid = 23299753;
+var uid = 1119251130;
+var roomid = 60324596;
 function mplode(a) {
     a.push("");
     return a.join("\r\n")
