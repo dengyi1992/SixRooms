@@ -4,13 +4,6 @@
       <env name="DEBUG" value="SixRooms:*" />
     </envs>
     <browser url="http://localhost:3000/" />
-    <profiling v8-profiler-path="" />
-    <EXTENSION ID="com.jetbrains.nodejs.run.NodeJSProfilingRunConfigurationExtension">
-      <profiling v8-profiler-path="" />
-    </EXTENSION>
-    <EXTENSION ID="com.jetbrains.nodejs.run.NodeJSStartBrowserRunConfigurationExtension">
-      <browser url="http://localhost:3000/" />
-    </EXTENSION>
     <method />
   </configuration>
 </component>

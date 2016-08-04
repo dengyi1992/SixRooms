@@ -11,10 +11,11 @@
     "debug": "~2.2.0",
     "express": "~4.13.4",
     "iconv": "^2.2.1",
+    "iconv-lite": "latest",
     "jade": "~1.11.0",
     "morgan": "~1.7.0",
+    "request": "^2.74.0",
     "serve-favicon": "~2.3.0",
-    "websocket": "^1.0.23",
-    "iconv-lite": "latest"
+    "websocket": "^1.0.23"
   }
 }
