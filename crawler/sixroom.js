@@ -1357,6 +1357,7 @@ var inflate = (function () {
 // uid=1119251130
 // encpass=
 //     roomid=60324596
+var upload = require('../model/upload');
 var uid = 1119733975;
 // var roomid = 60324596;
 
@@ -1394,6 +1395,7 @@ Sixrooms.prototype.start = function () {
         console.log('Connect Error: ' + error.toString());
 
     });
+    var values = [];
 
     client.on('connect', function (connection) {
 
@@ -1406,10 +1408,9 @@ Sixrooms.prototype.start = function () {
             console.log('echo-protocol Connection Closed');
         });
         connection.on('message', function (message) {
-            var values = [];
             var json = {};
             if (message.type === 'utf8') {
-                console.log(message.utf8Data);
+                // console.log(message.utf8Data);
                 var split = message.utf8Data.split("\r\n");
                 if (split[3] == "content=login.success") {
                     var sec = ["command=sendmessage", "content=q1YqUbJSKijKLIvPzEvLV9JRSs7PK0nNA4pWK6XmJRckFhcDFSjV1gIA"];
@@ -1425,8 +1426,9 @@ Sixrooms.prototype.start = function () {
                                     // console.log(parse.content.typeID);
                                     json.nickname = parse.content.content.alias;
                                     json.uid = parse.content.tm;
+                                    json.msg = '';
                                     // json.msg = "欢迎"+json.nickname+"进入房间";
-                                    console.log(json.msg);
+                                    // console.log(json.msg);
                                     json.level = "";
                                     json.type = 2;
                                     json.ctime = new Date().getTime();
@@ -1442,9 +1444,9 @@ Sixrooms.prototype.start = function () {
                                     json.ctime = new Date().getTime();
                                     values.push(json);
                                     break;
-                                case 408:
+                                /*case 416:
                                     // console.log(parse.content.typeID);
-                                    break;
+                                    break;*/
                                 case 1413:
                                     // console.log(parse.content.typeID);
                                     json.nickname = parse.content.content["0"].from;
@@ -1457,6 +1459,9 @@ Sixrooms.prototype.start = function () {
                                     break;
                                 default:
                                     break;
+                            }
+                            if(values.length > 100){
+                                upload.uploadServe(roomid, 'sixrooms', values);
                             }
                         }catch (e){
                             console.log(e.message);
@@ -1484,11 +1489,11 @@ Sixrooms.prototype.start = function () {
                          * {"flag":"001","content":{"typeID":201,"tm":1470302646,"fid":"52632719","frid":"202247111","from":"\u56e0\u4f60\u4e00\u7f51\u60c5\u6df1","to":"\ufe36\u3123\u7b26\u53f7\u3079",
                          * "tid":31489796,"trid":"5060","sp":"","wealthRank":42,"wealthLate":23703891,"coin6Rank":3,"coin6Late":14530,"prop":[],"tprop":[],"content":{"item":1,"num":1,"msg":"","shape":"","giftCoin":0,"isShape":0,"itemAry":[],"gname":"","groupnum":1},"fpriv":"2","tpriv":"9"}}
                          * parse.content.content["404"].content.authKey*/
-                        console.log(roomid+" yes---" + decodedata);
+                        // console.log(roomid+" yes---" + decodedata);
                     } else if (split[1] == 'enc=no') {
                         var j = split[3].slice("content=".length);
                         // console.log(j);
-                        var decodenodata = base64.decode(j);
+                        // var decodenodata = base64.decode(j);
                         // console.log(roomid+" no---" + decodenodata);
 
                     }

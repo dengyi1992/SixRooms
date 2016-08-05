@@ -77,7 +77,7 @@ myEvents.on("gethost", function (room, rid) {
         }
         var parse2 = JSON.parse(body2);
         var host = parse2.content.websock[0];
-        console.log('room: ' + room + ' rid: ' + rid + ' host: ' + host);
+        // console.log('room: ' + room + ' rid: ' + rid + ' host: ' + host);
         new sixrooms(room, rid, host);
     })
 });
@@ -89,10 +89,10 @@ myEvents.on("islive", function (room) {
         }
         var parse1 = JSON.parse(body1);
         var type = parse1.content.liveinfo.type;
-        console.log('room: ' + room + ' type: ' + type);
+        // console.log('room: ' + room + ' type: ' + type);
         if (type) {
             var rid = parse1.content.liveinfo.content["1"].red.uid;
-            console.log('type: ' + type + ' rid: ' + rid);
+            // console.log('type: ' + type + ' rid: ' + rid);
             myEvents.emit('gethost', room, rid);
         }
         //
