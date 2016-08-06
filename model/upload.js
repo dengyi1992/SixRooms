@@ -21,7 +21,7 @@ exports.uploadServe = function (room_id, paltform, data) {
             console.log('----info------', data);
 
         }else {
-            console.log(error.message)
+            console.log(error);
         }
     }
 
