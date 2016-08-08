@@ -11,6 +11,7 @@ var eventEmitter = require('events').EventEmitter;
 var myEvents = new eventEmitter();
 
 var schedule = require('node-schedule');
+var rule1 = new schedule.RecurrenceRule();
 var rule = new schedule.RecurrenceRule();
 // var cheerio = require('cheerio');
 var config = require('./config');
@@ -68,6 +69,7 @@ app.use(function (err, req, res, next) {
 
 var rooms = [];
 var times = [];
+var times1 = [];
 var length = 0;
 
 myEvents.on("gethost", function (room, rid) {
@@ -99,34 +101,39 @@ myEvents.on("islive", function (room) {
     })
 });
 
-request('http://120.27.94.166:2999/getRooms?platform=sixrooms&topn=' + config.topn, function (error, response, body) {
-    if (error) {
-        return console.log(error);
-    }
-    var parse = JSON.parse(body);
-    length = parse.data.length;
-
-    for (var i = 0; i < length; i++) {
-        var roomId = parse.data[i].room_id;
-        rooms.push(roomId);
-    }
-
-    rule.second = times;
-    for (var i = 0; i < 60; i++) {
-        times.push(i);
-    }
-
-    // console.log("-------------");
-    var count = 0;
-    schedule.scheduleJob(rule, function () {
-        if (count >= length) {
-            count = 0;
-            this.cancel();
-            return;
+rule1.hour = times1;
+for (var i = 0; i < 24; i = i + 2) {
+    times1.push(i);
+}
+schedule.scheduleJob(rule1, function () {
+    request('http://120.27.94.166:2999/getRooms?platform=sixrooms&topn=' + config.topn, function (error, response, body) {
+        if (error) {
+            return console.log(error);
         }
-        myEvents.emit("islive", rooms[count++]);
-    });
+        var parse = JSON.parse(body);
+        length = parse.data.length;
 
+        for (var i = 0; i < length; i++) {
+            var roomId = parse.data[i].room_id;
+            rooms.push(roomId);
+        }
+
+        rule.second = times;
+        for (var i = 0; i < 60; i++) {
+            times.push(i);
+        }
+
+        // console.log("-------------");
+        var count = 0;
+        schedule.scheduleJob(rule, function () {
+            if (count >= length) {
+                count = 0;
+                this.cancel();
+                return;
+            }
+            myEvents.emit("islive", rooms[count++]);
+        });
+    });
 });
 
 module.exports = app;
