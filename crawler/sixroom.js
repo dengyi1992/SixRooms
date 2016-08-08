@@ -1426,8 +1426,8 @@ Sixrooms.prototype.start = function () {
                                     // console.log(parse.content.typeID);
                                     json.nickname = parse.content.content.alias;
                                     json.uid = parse.content.tm;
-                                    json.msg = '';
-                                    // json.msg = "欢迎"+json.nickname+"进入房间";
+                                    // json.msg = '';
+                                    json.msg = "欢迎"+json.nickname+"进入房间";
                                     // console.log(json.msg);
                                     json.level = "";
                                     json.type = 2;

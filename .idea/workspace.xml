@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6dcbf290-9d26-4f02-9c2e-0bd27319d965" name="Default" comment="加入定時">
+    <list default="true" id="6dcbf290-9d26-4f02-9c2e-0bd27319d965" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.js" afterPath="$PROJECT_DIR$/app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/crawler/sixroom.js" afterPath="$PROJECT_DIR$/crawler/sixroom.js" />
     </list>
     <ignored path="SixRooms.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -26,7 +26,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="677">
@@ -78,11 +78,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="sixroom.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="sixroom.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/crawler/sixroom.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="325">
-              <caret line="1444" column="54" selection-start-line="1444" selection-start-column="54" selection-end-line="1444" selection-end-column="54" />
+            <state relative-caret-position="235">
+              <caret line="1430" column="61" selection-start-line="1430" selection-start-column="61" selection-end-line="1430" selection-end-column="61" />
               <folding />
             </state>
           </provider>
@@ -131,11 +131,11 @@
         <option value="$PROJECT_DIR$/fff68be63713e6e9adc3.js" />
         <option value="$PROJECT_DIR$/sixroom.js" />
         <option value="$PROJECT_DIR$/8f855658a521511d06d9.js" />
-        <option value="$PROJECT_DIR$/crawler/sixroom.js" />
         <option value="$PROJECT_DIR$/config.js" />
         <option value="$PROJECT_DIR$/model/upload.js" />
         <option value="$PROJECT_DIR$/bin/www" />
         <option value="$PROJECT_DIR$/app.js" />
+        <option value="$PROJECT_DIR$/crawler/sixroom.js" />
       </list>
     </option>
   </component>
@@ -739,7 +739,7 @@
       <workItem from="1470102151534" duration="15000" />
       <workItem from="1470279130816" duration="15880000" />
       <workItem from="1470302895006" duration="2577000" />
-      <workItem from="1470360680953" duration="14380000" />
+      <workItem from="1470360680953" duration="15108000" />
     </task>
     <task id="LOCAL-00001" summary="init file">
       <created>1470305399494</created>
@@ -769,11 +769,18 @@
       <option name="project" value="LOCAL" />
       <updated>1470621590969</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="try{ }catch(e.message)">
+      <created>1470624114131</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1470624114131</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="44651000" />
+    <option name="totallyTimeSpent" value="45379000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="27" width="1920" height="1173" extended-state="6" />
@@ -823,7 +830,8 @@
     <MESSAGE value="6房间 弹幕获取 nodejs 多线程" />
     <MESSAGE value="upload" />
     <MESSAGE value="加入定時" />
-    <option name="LAST_COMMIT_MESSAGE" value="加入定時" />
+    <MESSAGE value="try{ }catch(e.message)" />
+    <option name="LAST_COMMIT_MESSAGE" value="try{ }catch(e.message)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1079,14 +1087,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/crawler/sixroom.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="1444" column="54" selection-start-line="1444" selection-start-column="54" selection-end-line="1444" selection-end-column="54" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/model/upload.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="414">
@@ -1117,6 +1117,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="677">
           <caret line="143" column="0" selection-start-line="143" selection-start-column="0" selection-end-line="143" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/crawler/sixroom.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="235">
+          <caret line="1430" column="61" selection-start-line="1430" selection-start-column="61" selection-end-line="1430" selection-end-column="61" />
           <folding />
         </state>
       </provider>
