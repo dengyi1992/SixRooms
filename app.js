@@ -90,13 +90,19 @@ myEvents.on("islive", function (room) {
             return console.log(error.message);
         }
         var parse1 = JSON.parse(body1);
-        var type = parse1.content.liveinfo.type;
-        // console.log('room: ' + room + ' type: ' + type);
-        if (type) {
-            var rid = parse1.content.liveinfo.content["1"].red.uid;
-            // console.log('type: ' + type + ' rid: ' + rid);
-            myEvents.emit('gethost', room, rid);
+        try{
+            var type = parse1.content.liveinfo.type;
+            // console.log('room: ' + room + ' type: ' + type);
+            if (type) {
+                var rid = parse1.content.liveinfo.content["1"].red.uid;
+                // console.log('type: ' + type + ' rid: ' + rid);
+                myEvents.emit('gethost', room, rid);
+            }
+        }catch (e){
+            console.log(e.message);
+            // console.log("type is undefined " + parse1.content);
         }
+
         //
     })
 });
