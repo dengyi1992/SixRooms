@@ -1462,6 +1462,7 @@ Sixrooms.prototype.start = function () {
                             }
                             if(values.length > 100){
                                 upload.uploadServe(roomid, 'sixrooms', values);
+                                values=[];
                             }
                         }catch (e){
                             console.log(e.message);

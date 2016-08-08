@@ -89,8 +89,9 @@ myEvents.on("islive", function (room) {
         if (error) {
             return console.log(error.message);
         }
-        var parse1 = JSON.parse(body1);
         try{
+            var parse1 = JSON.parse(body1);
+
             var type = parse1.content.liveinfo.type;
             // console.log('room: ' + room + ' type: ' + type);
             if (type) {
