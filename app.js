@@ -67,6 +67,82 @@ app.use(function (err, req, res, next) {
     });
 });
 
+/*var rooms = [];
+ var times = [];
+ var times1 = [];
+ var length = 0;
+
+ myEvents.on("gethost", function (room, rid) {
+ request('http://v.6.cn/coop/mobile/index.php?ruid=' + rid + '&padapi=coop-mobile-chatConf.php', function (error, response, body2) {
+ if (error) {
+ return console.log(error.message);
+ }
+ var parse2 = JSON.parse(body2);
+ var host = parse2.content.websock[0];
+ // console.log('room: ' + room + ' rid: ' + rid + ' host: ' + host);
+ new sixrooms(room, rid, host);
+ })
+ });
+
+ myEvents.on("islive", function (room) {
+ request('http://v.6.cn/coop/mobile/index.php?rid=' + room + '&padapi=coop-mobile-inroom.php', function (error, response, body1) {
+ if (error) {
+ return console.log(error.message);
+ }
+ try{
+ var parse1 = JSON.parse(body1);
+
+ var type = parse1.content.liveinfo.type;
+ // console.log('room: ' + room + ' type: ' + type);
+ if (type) {
+ var rid = parse1.content.liveinfo.content["1"].red.uid;
+ // console.log('type: ' + type + ' rid: ' + rid);
+ myEvents.emit('gethost', room, rid);
+ }
+ }catch (e){
+ console.log(e.message);
+ // console.log("type is undefined " + parse1.content);
+ }
+
+ //
+ })
+ });*/
+
+/*rule1.hour = times1;
+ for (var i = 0; i < 24; i = i + 2) {
+ times1.push(i);
+ }
+ schedule.scheduleJob(rule1, function () {
+ request('http://120.27.94.166:2999/getRooms?platform=sixrooms&topn=' + config.topn, function (error, response, body) {
+ if (error) {
+ return console.log(error);
+ }
+ var parse = JSON.parse(body);
+ length = parse.data.length;
+
+ for (var i = 0; i < length; i++) {
+ var roomId = parse.data[i].room_id;
+ rooms.push(roomId);
+ }
+
+ rule.second = times;
+ for (var i = 0; i < 60; i++) {
+ times.push(i);
+ }
+
+ // console.log("-------------");
+ var count = 0;
+ schedule.scheduleJob(rule, function () {
+ if (count >= length) {
+ count = 0;
+ this.cancel();
+ return;
+ }
+ myEvents.emit("islive", rooms[count++]);
+ });
+ });
+ });*/
+
 var rooms = [];
 var times = [];
 var times1 = [];
@@ -89,7 +165,7 @@ myEvents.on("islive", function (room) {
         if (error) {
             return console.log(error.message);
         }
-        try{
+        try {
             var parse1 = JSON.parse(body1);
 
             var type = parse1.content.liveinfo.type;
@@ -99,48 +175,67 @@ myEvents.on("islive", function (room) {
                 // console.log('type: ' + type + ' rid: ' + rid);
                 myEvents.emit('gethost', room, rid);
             }
-        }catch (e){
+        } catch (e) {
             console.log(e.message);
             // console.log("type is undefined " + parse1.content);
         }
-
-        //
-    })
-});
-
-rule1.hour = times1;
-for (var i = 0; i < 24; i = i + 2) {
-    times1.push(i);
-}
-schedule.scheduleJob(rule1, function () {
-    request('http://120.27.94.166:2999/getRooms?platform=sixrooms&topn=' + config.topn, function (error, response, body) {
-        if (error) {
-            return console.log(error);
-        }
-        var parse = JSON.parse(body);
-        length = parse.data.length;
-
-        for (var i = 0; i < length; i++) {
-            var roomId = parse.data[i].room_id;
-            rooms.push(roomId);
-        }
-
-        rule.second = times;
-        for (var i = 0; i < 60; i++) {
-            times.push(i);
-        }
-
-        // console.log("-------------");
-        var count = 0;
-        schedule.scheduleJob(rule, function () {
-            if (count >= length) {
-                count = 0;
-                this.cancel();
-                return;
-            }
-            myEvents.emit("islive", rooms[count++]);
-        });
     });
 });
 
-module.exports = app;
+    var times1 = [];
+    rule1.hour = times1;
+    for (var i = 0; i < 24; i = i + 3) {
+        times1.push(i);
+    }
+    schedule.scheduleJob(rule1, function () {
+        var sixroomsApi = {
+            method: 'GET',
+            encoding: null,
+            url: "http://www.6.cn/liveAjax.html"
+        };//fans:http://v.6.cn/profile/index.php?rid=room_id    <b class="js_followNum" id="ipbzcwoz">182987</b>
+        request(sixroomsApi, function (err, response, body) {
+            if (err) {
+                return console.log(err);
+            }
+            var data = JSON.parse(body).roomList;
+            var rooms = [];
+            for (var i = 0; i < 200; i++) {
+                var room_id = data[i].rid;
+                rooms.push(room_id);
+            }
+            console.log("rooms:" + rooms);
+            var options1 = {
+                method: 'POST',
+                url: 'http://120.27.94.166:2999/insertCR',
+                // url: 'http://localhost:2999/insertCR',
+                body: {
+                    platform: 'sixrooms',
+                    rooms: rooms
+                },
+                json: true
+            };
+
+            request(options1, function (error, response, body) {
+                if (error)  return console.log(error.message);
+
+                console.log(body);
+            });
+
+            rule.second = times;
+            for (var i = 0; i < 60; i++) {
+                times.push(i);
+            }
+
+            var count = 0;
+            schedule.scheduleJob(rule, function () {
+                if (count >= rooms.length) {
+                    count = 0;
+                    rooms = [];
+                    this.cancel();
+                    return;
+                }
+                myEvents.emit("islive", rooms[count++]);
+            });
+        });
+    });
+    module.exports = app;
