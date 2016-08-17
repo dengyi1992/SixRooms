@@ -8,9 +8,9 @@ exports.uploadServe = function (room_id, paltform, data) {
     var options = {
         headers: {"Connection": "close"},
         url: config.upload.uploadurl + "dmSixrooms" +
-        "?room_id=" + room_id,
-         /*url: "http://localhost:2999/" +  "dmSixrooms" +
-         "?room_id=" + room_id,*/
+         "?room_id=" + room_id,
+        /*url: "http://localhost:2999/" + "dmSixrooms" +
+        "?room_id=" + room_id,*/
         method: 'POST',
         json: true,
         body: {data: data}
@@ -20,11 +20,11 @@ exports.uploadServe = function (room_id, paltform, data) {
         if (!error && response.statusCode == 200) {
             console.log('----info------', data);
 
-        }else {
+        } else {
             console.log(error);
         }
     }
 
     request(options, callback);
-    console.log(room_id + "******" );//+ JSON.stringify({data: data}));
+    console.log(room_id + "******");//+ JSON.stringify({data: data}));
 };

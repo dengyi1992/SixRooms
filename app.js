@@ -11,7 +11,7 @@ var eventEmitter = require('events').EventEmitter;
 var myEvents = new eventEmitter();
 
 var schedule = require('node-schedule');
-var rule1 = new schedule.RecurrenceRule();
+// var rule1 = new schedule.RecurrenceRule();
 var rule = new schedule.RecurrenceRule();
 // var cheerio = require('cheerio');
 var config = require('./config');
@@ -145,8 +145,8 @@ app.use(function (err, req, res, next) {
 
 var rooms = [];
 var times = [];
-var times1 = [];
-var length = 0;
+// var times1 = [];
+// var length = 0;
 
 myEvents.on("gethost", function (room, rid) {
     request('http://v.6.cn/coop/mobile/index.php?ruid=' + rid + '&padapi=coop-mobile-chatConf.php', function (error, response, body2) {
@@ -182,12 +182,12 @@ myEvents.on("islive", function (room) {
     });
 });
 
-    var times1 = [];
+    /*var times1 = [];
     rule1.hour = times1;
-    for (var i = 0; i < 24; i = i + 3) {
+    for (var i = 0; i < 24; i = i + 2) {
         times1.push(i);
-    }
-    schedule.scheduleJob(rule1, function () {
+    }*/
+    // schedule.scheduleJob(rule1, function () {
         var sixroomsApi = {
             method: 'GET',
             encoding: null,
@@ -204,7 +204,7 @@ myEvents.on("islive", function (room) {
                 rooms.push(room_id);
             }
             console.log("rooms:" + rooms);
-            var options1 = {
+            /*var options1 = {
                 method: 'POST',
                 url: 'http://120.27.94.166:2999/insertCR',
                 // url: 'http://localhost:2999/insertCR',
@@ -219,7 +219,7 @@ myEvents.on("islive", function (room) {
                 if (error)  return console.log(error.message);
 
                 console.log(body);
-            });
+            });*/
 
             rule.second = times;
             for (var i = 0; i < 60; i++) {
@@ -237,5 +237,5 @@ myEvents.on("islive", function (room) {
                 myEvents.emit("islive", rooms[count++]);
             });
         });
-    });
+    // });
     module.exports = app;
