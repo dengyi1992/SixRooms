@@ -1398,13 +1398,14 @@ Sixrooms.prototype.start = function () {
     var values = [];
 
     client.on('connect', function (connection) {
-
+        map.set(roomid,true);
         console.log('WebSocket Client Connected');
         connection.on('error', function (error) {
             console.log("Connection Error: " + error.toString());
         });
         connection.on('close', function () {
             // client.connect("ws://42.62.28.177:5999/");
+            map.set(roomid,false);
             console.log('echo-protocol Connection Closed');
         });
         connection.on('message', function (message) {
