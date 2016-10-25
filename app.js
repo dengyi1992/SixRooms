@@ -200,7 +200,7 @@ for (var i = 0; i < 60; i += 15) {
     time.push(i);
 }
 rule1.minute = time;
-schedule.scheduleJob(rule1, function () {
+function DMstart() {
     request(sixroomsApi, function (err, response, body) {
         if (err) {
             return console.log(err);
@@ -245,7 +245,11 @@ schedule.scheduleJob(rule1, function () {
             myEvents.emit("islive", rooms[count++]);
         });
     });
+}
+schedule.scheduleJob(rule1, function () {
+    DMstart();
 });
+DMstart();
 
 // });
 module.exports = app;
